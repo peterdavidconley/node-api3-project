@@ -52,7 +52,7 @@ router.put('/:id', validateUserId, validateUser, (req, res, next) => {
   .catch(next)
 });
 
-router.delete('/:id', validateUserId, async (req, res) => {
+router.delete('/:id', validateUserId, async (req, res, next) => {
 
   try {
     await User.remove(req.params.id)
