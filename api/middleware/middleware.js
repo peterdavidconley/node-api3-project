@@ -20,7 +20,6 @@ async function validateUserId(req, res, next) {
       })
     } else {
       req.user = user
-      res.status(201).json(user)
       next()
     }
   } catch (err) {

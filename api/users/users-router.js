@@ -39,17 +39,18 @@ router.post('/', validateUser, (req, res, next) => {
 
 });
 
-router.put('/:id', validateUserId, validateUser, (req, res, next) => {
+router.put('/:id', validateUserId, validateUser, async (req, res, next) => {
 
-  User.update(req.params.id, { name: req.name })
-  .then(updatedUser => {
-    return User.getById(req.params.id)
-  })
-  .then(user => {
-    res.json(user)
-  } 
-  )
-  .catch(next)
+  try {
+  const changes = req.body
+  const { id } = req.params
+  const updatedUser = await User.update(id, changes)
+  res.status(201).json(updatedUser)
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Something went wrong'})
+    next
+  }
 });
 
 router.delete('/:id', validateUserId, async (req, res, next) => {
